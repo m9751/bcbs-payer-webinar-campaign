@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BCBS Payer Webinar Campaign — March 26, 2026</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#0d1117;--surface:#161b22;--border:#30363d;--text:#c9d1d9;
+--text-dim:#8b949e;--accent:#0176D3;--accent-hover:#1a8ceb;
+--green:#3fb950;--yellow:#d29922;--red:#f85149;--purple:#a371f7;
+--card:#1c2128;--hover:#21262d;
+}
+html{font-size:15px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,sans-serif;line-height:1.6;padding:0 1rem 4rem}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:1100px;margin:0 auto}
+h1{font-size:1.8rem;color:#fff;margin-bottom:.25rem}
+h2{font-size:1.35rem;color:#fff;margin:2.5rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+h3{font-size:1.1rem;color:#fff;margin:1.2rem 0 .6rem}
+h4{font-size:.95rem;color:var(--accent);margin:.8rem 0 .4rem}
+
+/* Header */
+.header{padding:2rem 0 1rem;border-bottom:1px solid var(--border);margin-bottom:2rem}
+.header .badge{display:inline-block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:20px;margin-right:.5rem;margin-bottom:.5rem}
+.badge-live{background:var(--green);color:#000}
+.badge-id{background:var(--border);color:var(--text)}
+.badge-accounts{background:var(--purple);color:#fff}
+
+/* Meta grid */
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin:1.5rem 0}
+.meta-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem}
+.meta-card .label{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-dim);margin-bottom:.25rem}
+.meta-card .value{font-size:.95rem;color:#fff;font-weight:600}
+
+/* Schedule table */
+table{width:100%;border-collapse:collapse;margin:1rem 0}
+th,td{text-align:left;padding:.65rem .8rem;border-bottom:1px solid var(--border);font-size:.88rem}
+th{color:var(--text-dim);font-weight:600;font-size:.75rem;text-transform:uppercase;letter-spacing:.04em}
+tr:hover{background:var(--hover)}
+
+/* Email cards */
+.email-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin:1.5rem 0;overflow:hidden}
+.email-header{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;cursor:pointer;user-select:none;transition:background .15s}
+.email-header:hover{background:var(--hover)}
+.email-header .title{display:flex;align-items:center;gap:.6rem}
+.email-header .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:.8rem;flex-shrink:0}
+.email-header .name{font-weight:600;color:#fff;font-size:1rem}
+.email-header .date{color:var(--text-dim);font-size:.82rem}
+.email-header .chevron{color:var(--text-dim);font-size:1.2rem;transition:transform .2s}
+.email-card.open .chevron{transform:rotate(180deg)}
+.email-body{display:none;border-top:1px solid var(--border);padding:1.2rem}
+.email-card.open .email-body{display:block}
+
+.subject-list{list-style:none;margin:.5rem 0}
+.subject-list li{padding:.35rem .7rem;margin:.3rem 0;background:var(--card);border-radius:6px;font-size:.9rem;display:flex;align-items:center;gap:.5rem}
+.subject-list li::before{content:"SL";font-size:.6rem;font-weight:700;background:var(--accent);color:#fff;padding:2px 5px;border-radius:3px}
+.preview-text{background:var(--card);padding:.6rem .8rem;border-radius:6px;font-size:.85rem;color:var(--text-dim);margin:.8rem 0;border-left:3px solid var(--accent)}
+
+/* Email preview (inbox view) */
+.inbox-preview{background:#ffffff;color:#1a1a1a;border-radius:8px;padding:0;margin:1rem 0;overflow:hidden;max-width:620px}
+.inbox-preview table{margin:0}
+.inbox-preview td{border:none;color:#1a1a1a}
+
+/* Copy button */
+.copy-btn{display:inline-flex;align-items:center;gap:.4rem;padding:6px 14px;font-size:.78rem;font-weight:600;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);cursor:pointer;transition:all .15s}
+.copy-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.copy-btn.copied{background:var(--green);color:#000;border-color:var(--green)}
+.copy-row{display:flex;gap:.5rem;flex-wrap:wrap;margin:.6rem 0}
+
+/* Personalization table */
+.pers-table td:first-child{font-weight:600;color:#fff;white-space:nowrap}
+.pers-table td:nth-child(2){font-size:.78rem;color:var(--text-dim);white-space:nowrap}
+.pers-table td:last-child{font-size:.88rem}
+
+/* Talk track */
+.talk-section{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem;margin:1rem 0}
+.talk-section h4{margin-top:0}
+.objection{background:var(--card);border-radius:8px;padding:.8rem 1rem;margin:.6rem 0}
+.objection .q{color:var(--yellow);font-weight:600;margin-bottom:.3rem;font-size:.9rem}
+.objection .a{font-size:.88rem;color:var(--text)}
+
+/* How to use */
+.how-to{background:var(--surface);border:1px solid var(--accent);border-radius:10px;padding:1.2rem 1.4rem;margin:1.5rem 0}
+.how-to ol{padding-left:1.2rem}
+.how-to li{margin:.4rem 0;font-size:.9rem}
+
+/* Responsive */
+@media(max-width:600px){
+  .meta-grid{grid-template-columns:1fr}
+  .email-header{flex-direction:column;align-items:flex-start;gap:.4rem}
+  table{font-size:.8rem}
+  th,td{padding:.5rem .4rem}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ============ HEADER ============ -->
+<div class="header">
+  <span class="badge badge-live">LIVE CAMPAIGN</span>
+  <span class="badge badge-id">701ed00001142BwAAI</span>
+  <span class="badge badge-accounts">71 Accounts</span>
+  <h1>BCBS Payer Webinar Campaign</h1>
+  <p style="color:var(--text-dim);font-size:.92rem">Unlock Business Value with MuleSoft, Data 360, and Agentforce 360 for Healthcare Payers</p>
+</div>
+
+<!-- ============ HOW TO USE ============ -->
+<div class="how-to">
+  <h3 style="margin-top:0;color:var(--accent)">How to Use This Campaign</h3>
+  <ol>
+    <li><strong>Check the send schedule</strong> below. Each email has a target send date. Emails 1-4 go to all 71 accounts. Email 5 splits by attendance.</li>
+    <li><strong>Expand each email card</strong> to see subject lines, preview text, and the full email body.</li>
+    <li><strong>Pick a subject line</strong> from the 3 variants. Use whichever sounds most natural for your contact.</li>
+    <li><strong>Copy the email HTML</strong> using the "Copy Email HTML" button. Paste into your email tool. The formatting, CTA button, and tracking beacon are included.</li>
+    <li><strong>Personalize</strong>: Check the <a href="#personalization">Personalization Table</a> for your accounts. Swap in the custom line where the email says <code>[PERSONALIZATION]</code>.</li>
+    <li><strong>Replace merge fields</strong>: <code>{{FIRST_NAME}}</code> with the contact's first name, <code>{{ACCOUNT_SLUG}}</code> with the lowercase hyphenated account name.</li>
+    <li><strong>UTM links</strong> already have campaign tracking. Just replace <code>{{ACCOUNT_SLUG}}</code> in the registration URL.</li>
+    <li><strong>After the event</strong>, use the <a href="#talk-track">AE Talk Track</a> section for follow-up calls.</li>
+  </ol>
+</div>
+
+<!-- ============ EVENT DETAILS ============ -->
+<h2>Event Details</h2>
+<div class="meta-grid">
+  <div class="meta-card"><div class="label">Date &amp; Time</div><div class="value">March 26, 2026<br>12:00 PM ET / 9:00 AM PT</div></div>
+  <div class="meta-card"><div class="label">Format</div><div class="value">Live Webinar (ON24)</div></div>
+  <div class="meta-card"><div class="label">ON24 Event ID</div><div class="value">5254176</div></div>
+  <div class="meta-card"><div class="label">Campaign ID</div><div class="value">701ed00001142BwAAI</div></div>
+  <div class="meta-card"><div class="label">Audience</div><div class="value">41 Tier 1 + 30 Tier 2<br>Healthcare orgs</div></div>
+  <div class="meta-card"><div class="label">Landing Page</div><div class="value"><a href="https://www.salesforce.com/events/webinars/mulesoft-data-360-agentforce-payers-webinar/" target="_blank">salesforce.com/events/...</a></div></div>
+</div>
+
+<h3>Speakers</h3>
+<table>
+  <tr><td style="color:#fff;font-weight:600">Bob Heyl</td><td>VP &amp; CTO, CareFirst BlueCross BlueShield</td></tr>
+  <tr><td style="color:#fff;font-weight:600">Kyle Mey</td><td>Salesforce</td></tr>
+  <tr><td style="color:#fff;font-weight:600">Bruno R. Neves</td><td>Salesforce</td></tr>
+  <tr><td style="color:#fff;font-weight:600">Surabhi Ravishankar</td><td>Salesforce</td></tr>
+  <tr><td style="color:#fff;font-weight:600">Ashif Mujib</td><td>Salesforce</td></tr>
+</table>
+
+<h3>Key Topics (Oreo Framework)</h3>
+<table>
+  <tr><td style="color:var(--yellow);font-weight:600">Cookie 1</td><td>Data Cloud + MuleSoft — unified data layer, real-time integration</td></tr>
+  <tr><td style="color:var(--green);font-weight:600">Cream</td><td>Agentforce — AI agents that act on clean, connected data</td></tr>
+  <tr><td style="color:var(--yellow);font-weight:600">Cookie 2</td><td>Agent Fabric + A2A/MCP protocol — governed agent collaboration, no agent sprawl</td></tr>
+</table>
+
+<!-- ============ SEND SCHEDULE ============ -->
+<h2>Send Schedule</h2>
+<table>
+  <thead><tr><th>#</th><th>Name</th><th>Send Date</th><th>Purpose</th><th>Audience</th></tr></thead>
+  <tbody>
+    <tr><td style="color:#fff;font-weight:700">1</td><td>Invite</td><td>Thu, March 5</td><td>Announce, create interest</td><td>All 71</td></tr>
+    <tr><td style="color:#fff;font-weight:700">2</td><td>Value Add</td><td>Thu, March 12</td><td>Why this matters to them</td><td>All 71</td></tr>
+    <tr><td style="color:#fff;font-weight:700">3</td><td>Social Proof</td><td>Thu, March 19</td><td>Speaker credibility, momentum</td><td>All 71</td></tr>
+    <tr><td style="color:#fff;font-weight:700">4</td><td>Last Chance</td><td>Tue, March 24</td><td>Final reminder, scarcity</td><td>All 71</td></tr>
+    <tr><td style="color:var(--green);font-weight:700">5a</td><td>Post-Event (attended)</td><td>Thu, March 27</td><td>Thanks + recording + next steps</td><td>Attendees</td></tr>
+    <tr><td style="color:var(--red);font-weight:700">5b</td><td>Post-Event (no-show)</td><td>Thu, March 27</td><td>Key insight + recording</td><td>No-shows</td></tr>
+  </tbody>
+</table>
+
+<!-- ============ EMAILS ============ -->
+<h2>Email Sequence</h2>
+
+<!-- ===== EMAIL 1 ===== -->
+<div class="email-card" id="email-1">
+  <div class="email-header" onclick="toggleCard(this)">
+    <div class="title"><span class="num">1</span><span class="name">Invite</span><span class="date">March 5, 2026</span></div>
+    <span class="chevron">&#9660;</span>
+  </div>
+  <div class="email-body">
+    <h4>Subject Lines (pick one)</h4>
+    <ul class="subject-list">
+      <li>quick question about your agents</li>
+      <li>march 26 — worth your time</li>
+      <li>thought of you for this</li>
+    </ul>
+    <div class="preview-text"><strong>Preview text:</strong> CareFirst BCBS CTO shares how they're connecting data, agents, and real outcomes.</div>
+    <div class="copy-row">
+      <button class="copy-btn" onclick="copyEmail('email1-html')">&#128203; Copy Email HTML</button>
+      <button class="copy-btn" onclick="copyText('email1-plain')">&#128196; Copy Plain Text</button>
+    </div>
+    <h4>Inbox Preview</h4>
+    <div class="inbox-preview" id="email1-html">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff"><tr><td align="center" style="padding:20px 10px">
+<table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:15px;line-height:1.6;color:#1a1a1a">
+<tr><td style="padding:24px 28px 0">
+<p style="margin:0 0 16px">Hi {{FIRST_NAME}},</p>
+<p style="margin:0 0 16px">If you've been watching the AI agent space, you've probably noticed the same thing we have: everyone's building agents, but few have figured out how to keep them from turning into another silo.</p>
+<p style="margin:0 0 16px">[PERSONALIZATION]</p>
+<p style="margin:0 0 16px">On <strong>March 26 at noon ET</strong>, Bob Heyl (VP/CTO at CareFirst BlueCross BlueShield) is joining our team to walk through how healthcare organizations are connecting their data layer, AI agents, and existing systems — without ripping and replacing what already works.</p>
+<p style="margin:0 0 16px">The session covers how Data 360 and MuleSoft work together to give agents clean, real-time data — and how Agent Fabric keeps everything governed as you scale.</p>
+<p style="margin:0 0 24px">45 minutes. Practical, not theoretical.</p>
+<table cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background:#0176D3;border-radius:6px"><a href="https://www.salesforce.com/events/webinars/mulesoft-data-360-agentforce-payers-webinar/?utm_source=ae_outreach&utm_medium=email&utm_campaign=bcbs-payer-webinar&utm_content=email-1&utm_term={{ACCOUNT_SLUG}}" target="_blank" style="display:inline-block;padding:12px 28px;color:#ffffff;font-weight:600;font-size:15px;text-decoration:none">Save Your Spot</a></td></tr></table>
+<p style="margin:20px 0 0;font-size:13px;color:#666">— Your Salesforce Team</p>
+</td></tr>
+<tr><td style="padding:24px 28px;font-size:11px;color:#999;border-top:1px solid #eee;margin-top:24px">
+Salesforce, Inc. 415 Mission Street, San Francisco, CA 94105<br>
+<a href="mailto:unsubscribe@salesforce.com?subject=Unsubscribe%20bcbs-payer-webinar%20{{ACCOUNT_SLUG}}" style="color:#999">Unsubscribe</a><br>
+<span style="font-size:10px;color:#bbb">This email may contain AI-generated content. Campaign ID: 701ed00001142BwAAI</span>
+</td></tr>
+</table>
+<img src="https://cnplogkxbjecdeeritdl.supabase.co/rest/v1/rpc/log_campaign_open?campaign_id=701ed00001142BwAAI&email_number=1&account_slug={{ACCOUNT_SLUG}}" width="1" height="1" alt="" style="display:none">
+</td></tr></table>
+    </div>
+    <div id="email1-plain" style="display:none">Hi {{FIRST_NAME}},
+
+If you've been watching the AI agent space, you've probably noticed the same thing we have: everyone's building agents, but few have figured out how to keep them from turning into another silo.
+
+[PERSONALIZATION]
+
+On March 26 at noon ET, Bob Heyl (VP/CTO at CareFirst BlueCross BlueShield) is joining our team to walk through how healthcare organizations are connecting their data layer, AI agents, and existing systems — without ripping and replacing what already works.
+
+The session covers how Data 360 and MuleSoft work together to give agents clean, real-time data — and how Agent Fabric keeps everything governed as you scale.
+
+45 minutes. Practical, not theoretical.
+
+Register: https://www.salesforce.com/events/webinars/mulesoft-data-360-agentforce-payers-webinar/?utm_source=ae_outreach&utm_medium=email&utm_campaign=bcbs-payer-webinar&utm_content=email-1&utm_term={{ACCOUNT_SLUG}}
+
+— Your Salesforce Team</div>
+  </div>
+</div>
+
+<!-- ===== EMAIL 2 ===== -->
+<div class="email-card" id="email-2">
+  <div class="email-header" onclick="toggleCard(this)">
+    <div class="title"><span class="num">2</span><span class="name">Value Add</span><span class="date">March 12, 2026</span></div>
+    <span class="chevron">&#9660;</span>
+  </div>
+  <div class="email-body">
+    <h4>Subject Lines (pick one)</h4>
+    <ul class="subject-list">
+      <li>the agent sprawl problem</li>
+      <li>your data + agents — connected?</li>
+      <li>before you build more agents</li>
+    </ul>
+    <div class="preview-text"><strong>Preview text:</strong> Most healthcare orgs have 3-5 AI pilots running. Here's what separates the ones that scale.</div>
+    <div class="copy-row">
+      <button class="copy-btn" onclick="copyEmail('email2-html')">&#128203; Copy Email HTML</button>
+      <button class="copy-btn" onclick="copyText('email2-plain')">&#128196; Copy Plain Text</button>
+    </div>
+    <h4>Inbox Preview</h4>
+    <div class="inbox-preview" id="email2-html">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff"><tr><td align="center" style="padding:20px 10px">
+<table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:15px;line-height:1.6;color:#1a1a1a">
+<tr><td style="padding:24px 28px 0">
+<p style="margin:0 0 16px">Hi {{FIRST_NAME}},</p>
+<p style="margin:0 0 16px">Here's what we keep hearing from healthcare IT leaders: "We've got AI agents in three departments, none of them talk to each other, and the data underneath is a mess."</p>
+<p style="margin:0 0 16px">That's agent sprawl. And it's the fastest way to burn budget without moving the needle on outcomes.</p>
+<p style="margin:0 0 16px">[PERSONALIZATION]</p>
+<p style="margin:0 0 16px">The March 26 session gets into the specifics:</p>
+<ul style="margin:0 0 16px;padding-left:20px">
+  <li style="margin-bottom:6px">How to give agents a single, clean data foundation (not another data lake)</li>
+  <li style="margin-bottom:6px">Why MuleSoft's integration layer matters more now than before AI</li>
+  <li style="margin-bottom:6px">What Agent Fabric actually does to prevent sprawl</li>
+</ul>
+<p style="margin:0 0 24px">Bob Heyl from CareFirst BCBS will share how they're thinking about this at scale. Worth hearing directly from someone living it.</p>
+<table cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background:#0176D3;border-radius:6px"><a href="https://www.salesforce.com/events/webinars/mulesoft-data-360-agentforce-payers-webinar/?utm_source=ae_outreach&utm_medium=email&utm_campaign=bcbs-payer-webinar&utm_content=email-2&utm_term={{ACCOUNT_SLUG}}" target="_blank" style="display:inline-block;padding:12px 28px;color:#ffffff;font-weight:600;font-size:15px;text-decoration:none">Register Now</a></td></tr></table>
+<p style="margin:20px 0 0;font-size:13px;color:#666">— Your Salesforce Team</p>
+</td></tr>
+<tr><td style="padding:24px 28px;font-size:11px;color:#999;border-top:1px solid #eee;margin-top:24px">
+Salesforce, Inc. 415 Mission Street, San Francisco, CA 94105<br>
+<a href="mailto:unsubscribe@salesforce.com?subject=Unsubscribe%20bcbs-payer-webinar%20{{ACCOUNT_SLUG}}" style="color:#999">Unsubscribe</a><br>
+<span style="font-size:10px;color:#bbb">This email may contain AI-generated content. Campaign ID: 701ed00001142BwAAI</span>
+</td></tr>
+</table>
+<img src="https://cnplogkxbjecdeeritdl.supabase.co/rest/v1/rpc/log_campaign_open?campaign_id=701ed00001142BwAAI&email_number=2&account_slug={{ACCOUNT_SLUG}}" width="1" height="1" alt="" style="display:none">
+</td></tr></table>
+    </div>
+    <div id="email2-plain" style="display:none">Hi {{FIRST_NAME}},
+
+Here's what we keep hearing from healthcare IT leaders: "We've got AI agents in three departments, none of them talk to each other, and the data underneath is a mess."
+
+That's agent sprawl. And it's the fastest way to burn budget without moving the needle on outcomes.
+
+[PERSONALIZATION]
+
+The March 26 session gets into the specifics:
+- How to give agents a single, clean data foundation (not another data lake)
+- Why MuleSoft's integration layer matters more now than before AI
+- What Agent Fabric actually does to prevent sprawl
+
+Bob Heyl from CareFirst BCBS will share how they're thinking about this at scale. Worth hearing directly from someone living it.
+
+Register: https://www.salesforce.com/events/webinars/mulesoft-data-360-agentforce-payers-webinar/?utm_source=ae_outreach&utm_medium=email&utm_campaign=bcbs-payer-webinar&utm_content=email-2&utm_term={{ACCOUNT_SLUG}}
+
+— Your Salesforce Team</div>
+  </div>
+</div>
+
+<!-- ===== EMAIL 3 ===== -->
+<div class="email-card" id="email-3">
+  <div class="email-header" onclick="toggleCard(this)">
+    <div class="title"><span class="num">3</span><span class="name">Social Proof</span><span class="date">March 19, 2026</span></div>
+    <span class="chevron">&#9660;</span>
+  </div>
+  <div class="email-body">
+    <h4>Subject Lines (pick one)</h4>
+    <ul class="subject-list">
+      <li>carefirst's cto is talking</li>
+      <li>blue shield already did this</li>
+      <li>real results, not a demo</li>
+    </ul>
+    <div class="preview-text"><strong>Preview text:</strong> Blue Shield of California cut prior auth time from days to hours. Bob Heyl from CareFirst shares what's next.</div>
+    <div class="copy-row">
+      <button class="copy-btn" onclick="copyEmail('email3-html')">&#128203; Copy Email HTML</button>
+      <button class="copy-btn" onclick="copyText('email3-plain')">&#128196; Copy Plain Text</button>
+    </div>
+    <h4>Inbox Preview</h4>
+    <div class="inbox-preview" id="email3-html">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff"><tr><td align="center" style="padding:20px 10px">
+<table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:15px;line-height:1.6;color:#1a1a1a">
+<tr><td style="padding:24px 28px 0">
+<p style="margin:0 0 16px">Hi {{FIRST_NAME}},</p>
+<p style="margin:0 0 16px">Quick update on the March 26 session — wanted to share some context on why we're excited about this one.</p>
+<p style="margin:0 0 16px">Blue Shield of California used Health Cloud to modernize their prior authorization workflow. What used to take days now takes hours. They didn't do it by adding more point solutions — they built on a connected data and integration layer first.</p>
+<p style="margin:0 0 16px">[PERSONALIZATION]</p>
+<p style="margin:0 0 16px">Next week, Bob Heyl — the VP/CTO at CareFirst BlueCross BlueShield — will walk through how his team is approaching the same challenge: getting clean data, connected systems, and AI agents working together under one roof.</p>
+<p style="margin:0 0 24px">This isn't a product pitch. It's a practitioner sharing what's actually working and what's next.</p>
+<table cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background:#0176D3;border-radius:6px"><a href="https://www.salesforce.com/events/webinars/mulesoft-data-360-agentforce-payers-webinar/?utm_source=ae_outreach&utm_medium=email&utm_campaign=bcbs-payer-webinar&utm_content=email-3&utm_term={{ACCOUNT_SLUG}}" target="_blank" style="display:inline-block;padding:12px 28px;color:#ffffff;font-weight:600;font-size:15px;text-decoration:none">Save Your Spot</a></td></tr></table>
+<p style="margin:20px 0 0;font-size:13px;color:#666">— Your Salesforce Team</p>
+</td></tr>
+<tr><td style="padding:24px 28px;font-size:11px;color:#999;border-top:1px solid #eee;margin-top:24px">
+Salesforce, Inc. 415 Mission Street, San Francisco, CA 94105<br>
+<a href="mailto:unsubscribe@salesforce.com?subject=Unsubscribe%20bcbs-payer-webinar%20{{ACCOUNT_SLUG}}" style="color:#999">Unsubscribe</a><br>
+<span style="font-size:10px;color:#bbb">This email may contain AI-generated content. Campaign ID: 701ed00001142BwAAI</span>
+</td></tr>
+</table>
+<img src="https://cnplogkxbjecdeeritdl.supabase.co/rest/v1/rpc/log_campaign_open?campaign_id=701ed00001142BwAAI&email_number=3&account_slug={{ACCOUNT_SLUG}}" width="1" height="1" alt="" style="display:none">
+</td></tr></table>
+    </div>
+    <div id="email3-plain" style="display:none">Hi {{FIRST_NAME}},
+
+Quick update on the March 26 session — wanted to share some context on why we're excited about this one.
+
+Blue Shield of California used Health Cloud to modernize their prior authorization workflow. What used to take days now takes hours. They didn't do it by adding more point solutions — they built on a connected data and integration layer first.
+
+[PERSONALIZATION]
+
+Next week, Bob Heyl — the VP/CTO at CareFirst BlueCross BlueShield — will walk through how his team is approaching the same challenge: getting clean data, connected systems, and AI agents working together under one roof.
+
+This isn't a product pitch. It's a practitioner sharing what's actually working and what's next.
+
+Register: https://www.salesforce.com/events/webinars/mulesoft-data-360-agentforce-payers-webinar/?utm_source=ae_outreach&utm_medium=email&utm_campaign=bcbs-payer-webinar&utm_content=email-3&utm_term={{ACCOUNT_SLUG}}
+
+— Your Salesforce Team</div>
+  </div>
+</div>
+
+<!-- ===== EMAIL 4 ===== -->
+<div class="email-card" id="email-4">
+  <div class="email-header" onclick="toggleCard(this)">
+    <div class="title"><span class="num">4</span><span class="name">Last Chance</span><span class="date">March 24, 2026</span></div>
+    <span class="chevron">&#9660;</span>
+  </div>
+  <div class="email-body">
+    <h4>Subject Lines (pick one)</h4>
+    <ul class="subject-list">
+      <li>thursday — last call</li>
+      <li>48 hours</li>
+      <li>still a seat open</li>
+    </ul>
+    <div class="preview-text"><strong>Preview text:</strong> March 26 at noon ET. CareFirst BCBS CTO + the team behind Agent Fabric. Last chance to register.</div>
+    <div class="copy-row">
+      <button class="copy-btn" onclick="copyEmail('email4-html')">&#128203; Copy Email HTML</button>
+      <button class="copy-btn" onclick="copyText('email4-plain')">&#128196; Copy Plain Text</button>
+    </div>
+    <h4>Inbox Preview</h4>
+    <div class="inbox-preview" id="email4-html">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff"><tr><td align="center" style="padding:20px 10px">
+<table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:15px;line-height:1.6;color:#1a1a1a">
+<tr><td style="padding:24px 28px 0">
+<p style="margin:0 0 16px">Hi {{FIRST_NAME}},</p>
+<p style="margin:0 0 16px">Just a heads up — the healthcare data + AI agents session is this Thursday at noon ET.</p>
+<p style="margin:0 0 16px">Bob Heyl (CareFirst BCBS CTO) is walking through how they're connecting data, integration, and agents without creating another layer of complexity. The Salesforce team will cover Agent Fabric and the new A2A protocol that lets agents collaborate securely across systems.</p>
+<p style="margin:0 0 16px">[PERSONALIZATION]</p>
+<p style="margin:0 0 24px">If you've been thinking about how to move from AI pilots to something production-ready, this is 45 minutes well spent.</p>
+<table cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background:#0176D3;border-radius:6px"><a href="https://www.salesforce.com/events/webinars/mulesoft-data-360-agentforce-payers-webinar/?utm_source=ae_outreach&utm_medium=email&utm_campaign=bcbs-payer-webinar&utm_content=email-4&utm_term={{ACCOUNT_SLUG}}" target="_blank" style="display:inline-block;padding:12px 28px;color:#ffffff;font-weight:600;font-size:15px;text-decoration:none">Register — Last Chance</a></td></tr></table>
+<p style="margin:20px 0 0;font-size:13px;color:#666">— Your Salesforce Team</p>
+</td></tr>
+<tr><td style="padding:24px 28px;font-size:11px;color:#999;border-top:1px solid #eee;margin-top:24px">
+Salesforce, Inc. 415 Mission Street, San Francisco, CA 94105<br>
+<a href="mailto:unsubscribe@salesforce.com?subject=Unsubscribe%20bcbs-payer-webinar%20{{ACCOUNT_SLUG}}" style="color:#999">Unsubscribe</a><br>
+<span style="font-size:10px;color:#bbb">This email may contain AI-generated content. Campaign ID: 701ed00001142BwAAI</span>
+</td></tr>
+</table>
+<img src="https://cnplogkxbjecdeeritdl.supabase.co/rest/v1/rpc/log_campaign_open?campaign_id=701ed00001142BwAAI&email_number=4&account_slug={{ACCOUNT_SLUG}}" width="1" height="1" alt="" style="display:none">
+</td></tr></table>
+    </div>
+    <div id="email4-plain" style="display:none">Hi {{FIRST_NAME}},
+
+Just a heads up — the healthcare data + AI agents session is this Thursday at noon ET.
+
+Bob Heyl (CareFirst BCBS CTO) is walking through how they're connecting data, integration, and agents without creating another layer of complexity. The Salesforce team will cover Agent Fabric and the new A2A protocol that lets agents collaborate securely across systems.
+
+[PERSONALIZATION]
+
+If you've been thinking about how to move from AI pilots to something production-ready, this is 45 minutes well spent.
+
+Register: https://www.salesforce.com/events/webinars/mulesoft-data-360-agentforce-payers-webinar/?utm_source=ae_outreach&utm_medium=email&utm_campaign=bcbs-payer-webinar&utm_content=email-4&utm_term={{ACCOUNT_SLUG}}
+
+— Your Salesforce Team</div>
+  </div>
+</div>
+
+<!-- ===== EMAIL 5a ===== -->
+<div class="email-card" id="email-5a">
+  <div class="email-header" onclick="toggleCard(this)">
+    <div class="title"><span class="num" style="background:var(--green)">5a</span><span class="name">Post-Event (Attended)</span><span class="date">March 27, 2026</span></div>
+    <span class="chevron">&#9660;</span>
+  </div>
+  <div class="email-body">
+    <h4>Subject Lines (pick one)</h4>
+    <ul class="subject-list">
+      <li>thanks for yesterday</li>
+      <li>recording + next steps</li>
+      <li>quick follow-up from thursday</li>
+    </ul>
+    <div class="preview-text"><strong>Preview text:</strong> Here's the recording and the one thing I'd focus on first based on what Bob shared.</div>
+    <div class="copy-row">
+      <button class="copy-btn" onclick="copyEmail('email5a-html')">&#128203; Copy Email HTML</button>
+      <button class="copy-btn" onclick="copyText('email5a-plain')">&#128196; Copy Plain Text</button>
+    </div>
+    <h4>Inbox Preview</h4>
+    <div class="inbox-preview" id="email5a-html">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff"><tr><td align="center" style="padding:20px 10px">
+<table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:15px;line-height:1.6;color:#1a1a1a">
+<tr><td style="padding:24px 28px 0">
+<p style="margin:0 0 16px">Hi {{FIRST_NAME}},</p>
+<p style="margin:0 0 16px">Thanks for joining yesterday. Here's the <a href="https://www.salesforce.com/events/webinars/mulesoft-data-360-agentforce-payers-webinar/?utm_source=ae_outreach&utm_medium=email&utm_campaign=bcbs-payer-webinar&utm_content=email-5a&utm_term={{ACCOUNT_SLUG}}">session recording</a> in case you want to revisit anything or share it with your team.</p>
+<p style="margin:0 0 16px">The part that stood out to me was Bob's point about starting with the data layer before adding agents. Most teams we talk to want to jump straight to AI — but the organizations seeing real ROI built the integration foundation first, then layered agents on top.</p>
+<p style="margin:0 0 16px">[PERSONALIZATION]</p>
+<p style="margin:0 0 24px">If any of that resonated with where your team is right now, I'd love to spend 20 minutes mapping out what a starting point could look like. No pressure — just a conversation.</p>
+<table cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background:#0176D3;border-radius:6px"><a href="mailto:{{AE_EMAIL}}?subject=Re:%20March%2026%20Webinar%20Follow-up&body=Hi%20{{AE_FIRST_NAME}}%2C%20I%27d%20like%20to%20set%20up%20a%20conversation." target="_blank" style="display:inline-block;padding:12px 28px;color:#ffffff;font-weight:600;font-size:15px;text-decoration:none">Let's Find 20 Minutes</a></td></tr></table>
+<p style="margin:20px 0 0;font-size:13px;color:#666">— Your Salesforce Team</p>
+</td></tr>
+<tr><td style="padding:24px 28px;font-size:11px;color:#999;border-top:1px solid #eee;margin-top:24px">
+Salesforce, Inc. 415 Mission Street, San Francisco, CA 94105<br>
+<a href="mailto:unsubscribe@salesforce.com?subject=Unsubscribe%20bcbs-payer-webinar%20{{ACCOUNT_SLUG}}" style="color:#999">Unsubscribe</a><br>
+<span style="font-size:10px;color:#bbb">This email may contain AI-generated content. Campaign ID: 701ed00001142BwAAI</span>
+</td></tr>
+</table>
+<img src="https://cnplogkxbjecdeeritdl.supabase.co/rest/v1/rpc/log_campaign_open?campaign_id=701ed00001142BwAAI&email_number=5a&account_slug={{ACCOUNT_SLUG}}" width="1" height="1" alt="" style="display:none">
+</td></tr></table>
+    </div>
+    <div id="email5a-plain" style="display:none">Hi {{FIRST_NAME}},
+
+Thanks for joining yesterday. Here's the session recording: https://www.salesforce.com/events/webinars/mulesoft-data-360-agentforce-payers-webinar/?utm_source=ae_outreach&utm_medium=email&utm_campaign=bcbs-payer-webinar&utm_content=email-5a&utm_term={{ACCOUNT_SLUG}}
+
+The part that stood out to me was Bob's point about starting with the data layer before adding agents. Most teams we talk to want to jump straight to AI — but the organizations seeing real ROI built the integration foundation first, then layered agents on top.
+
+[PERSONALIZATION]
+
+If any of that resonated with where your team is right now, I'd love to spend 20 minutes mapping out what a starting point could look like. No pressure — just a conversation.
+
+— Your Salesforce Team</div>
+  </div>
+</div>
+
+<!-- ===== EMAIL 5b ===== -->
+<div class="email-card" id="email-5b">
+  <div class="email-header" onclick="toggleCard(this)">
+    <div class="title"><span class="num" style="background:var(--red)">5b</span><span class="name">Post-Event (No-Show)</span><span class="date">March 27, 2026</span></div>
+    <span class="chevron">&#9660;</span>
+  </div>
+  <div class="email-body">
+    <h4>Subject Lines (pick one)</h4>
+    <ul class="subject-list">
+      <li>you missed a good one</li>
+      <li>the recording is up</li>
+      <li>here's what bob said</li>
+    </ul>
+    <div class="preview-text"><strong>Preview text:</strong> CareFirst's CTO dropped a line about agent sprawl that's worth hearing. Recording inside.</div>
+    <div class="copy-row">
+      <button class="copy-btn" onclick="copyEmail('email5b-html')">&#128203; Copy Email HTML</button>
+      <button class="copy-btn" onclick="copyText('email5b-plain')">&#128196; Copy Plain Text</button>
+    </div>
+    <h4>Inbox Preview</h4>
+    <div class="inbox-preview" id="email5b-html">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff"><tr><td align="center" style="padding:20px 10px">
+<table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:15px;line-height:1.6;color:#1a1a1a">
+<tr><td style="padding:24px 28px 0">
+<p style="margin:0 0 16px">Hi {{FIRST_NAME}},</p>
+<p style="margin:0 0 16px">Sorry we missed you yesterday. The good news: we recorded everything.</p>
+<p style="margin:0 0 16px">The standout moment was Bob Heyl (CareFirst BCBS CTO) explaining why most AI agent projects in healthcare stall — it's not the agent, it's the data underneath. His team's approach: get the data layer right with Data 360, connect it with MuleSoft, then let agents do their thing on a clean foundation.</p>
+<p style="margin:0 0 16px">The session also covered Agent Fabric — Salesforce's answer to agent sprawl — and the new A2A protocol that lets agents from different vendors collaborate securely.</p>
+<p style="margin:0 0 16px">[PERSONALIZATION]</p>
+<p style="margin:0 0 24px">Worth 45 minutes if you're planning any AI agent work this year.</p>
+<table cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background:#0176D3;border-radius:6px"><a href="https://www.salesforce.com/events/webinars/mulesoft-data-360-agentforce-payers-webinar/?utm_source=ae_outreach&utm_medium=email&utm_campaign=bcbs-payer-webinar&utm_content=email-5b&utm_term={{ACCOUNT_SLUG}}" target="_blank" style="display:inline-block;padding:12px 28px;color:#ffffff;font-weight:600;font-size:15px;text-decoration:none">Watch the Recording</a></td></tr></table>
+<p style="margin:20px 0 0;font-size:13px;color:#666">— Your Salesforce Team</p>
+</td></tr>
+<tr><td style="padding:24px 28px;font-size:11px;color:#999;border-top:1px solid #eee;margin-top:24px">
+Salesforce, Inc. 415 Mission Street, San Francisco, CA 94105<br>
+<a href="mailto:unsubscribe@salesforce.com?subject=Unsubscribe%20bcbs-payer-webinar%20{{ACCOUNT_SLUG}}" style="color:#999">Unsubscribe</a><br>
+<span style="font-size:10px;color:#bbb">This email may contain AI-generated content. Campaign ID: 701ed00001142BwAAI</span>
+</td></tr>
+</table>
+<img src="https://cnplogkxbjecdeeritdl.supabase.co/rest/v1/rpc/log_campaign_open?campaign_id=701ed00001142BwAAI&email_number=5b&account_slug={{ACCOUNT_SLUG}}" width="1" height="1" alt="" style="display:none">
+</td></tr></table>
+    </div>
+    <div id="email5b-plain" style="display:none">Hi {{FIRST_NAME}},
+
+Sorry we missed you yesterday. The good news: we recorded everything.
+
+The standout moment was Bob Heyl (CareFirst BCBS CTO) explaining why most AI agent projects in healthcare stall — it's not the agent, it's the data underneath. His team's approach: get the data layer right with Data 360, connect it with MuleSoft, then let agents do their thing on a clean foundation.
+
+The session also covered Agent Fabric — Salesforce's answer to agent sprawl — and the new A2A protocol that lets agents from different vendors collaborate securely.
+
+[PERSONALIZATION]
+
+Worth 45 minutes if you're planning any AI agent work this year.
+
+Watch: https://www.salesforce.com/events/webinars/mulesoft-data-360-agentforce-payers-webinar/?utm_source=ae_outreach&utm_medium=email&utm_campaign=bcbs-payer-webinar&utm_content=email-5b&utm_term={{ACCOUNT_SLUG}}
+
+— Your Salesforce Team</div>
+  </div>
+</div>
+
+<!-- ============ PERSONALIZATION ============ -->
+<h2 id="personalization">Personalization Inserts</h2>
+<p style="color:var(--text-dim);font-size:.88rem;margin-bottom:1rem">Replace <code>[PERSONALIZATION]</code> in any email with the line below for these accounts. For all other accounts, delete the <code>[PERSONALIZATION]</code> line entirely.</p>
+
+<table class="pers-table">
+  <thead><tr><th>Account</th><th>Signal</th><th>Insert Copy</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Blue Cross and Blue Shield of Kansas</td>
+      <td>Health Plan / BCBS subsidiary</td>
+      <td>As a BCBS plan, you'll hear directly from a peer — Bob Heyl runs technology for CareFirst BCBS and will share the integration decisions his team made to connect payer data with care delivery systems.</td>
+    </tr>
+    <tr>
+      <td>Fairfield Medical Center</td>
+      <td>Acquired by OhioHealth</td>
+      <td>With the OhioHealth integration underway, your team is likely navigating how to unify systems and data across organizations — exactly the kind of challenge this session addresses head-on.</td>
+    </tr>
+    <tr>
+      <td>Valley Medical Facilities</td>
+      <td>Acquired by AHN / Highmark</td>
+      <td>As you integrate into the Allegheny Health Network and Highmark ecosystem, the pressure to connect clinical, financial, and operational data across entities is real. This session covers a practical path through that.</td>
+    </tr>
+    <tr>
+      <td>Tivity Health Services</td>
+      <td>PE/VC funded</td>
+      <td>Private equity-backed healthcare companies face a unique pressure: prove ROI fast while building infrastructure that scales. Bob's session covers how to get immediate value from your data and integration investments, not just long-term promises.</td>
+    </tr>
+    <tr>
+      <td>RxBenefits Inc.</td>
+      <td>PE/VC funded</td>
+      <td>In pharmacy benefits, the data exchange between PBMs, plans, and providers is notoriously fragmented. This session shows how a connected data layer can cut through that complexity and give AI agents the foundation they need to actually help.</td>
+    </tr>
+    <tr>
+      <td>US Acute Care Solutions</td>
+      <td>PE/VC funded</td>
+      <td>Running acute care at scale means stitching together data from dozens of hospital partners and systems. Bob Heyl's team at CareFirst faces a similar puzzle — his approach to connected data is directly relevant to your world.</td>
+    </tr>
+    <tr>
+      <td>Confluent Health</td>
+      <td>High ICP fit</td>
+      <td>With your multi-site rehab and therapy model, the challenge of getting patient data, scheduling, and billing to work across locations is constant. This session maps out how other healthcare organizations are solving that with a unified data and agent approach.</td>
+    </tr>
+    <tr>
+      <td>Covenant Medical Center</td>
+      <td>High ICP fit</td>
+      <td>For a medical center managing the full continuum — inpatient, outpatient, specialty — the number of systems that need to talk to each other is staggering. This session covers the practical side of making that happen without a multi-year rebuild.</td>
+    </tr>
+    <tr>
+      <td>University of Tennessee Medical Center</td>
+      <td>High ICP fit</td>
+      <td>Academic medical centers are juggling clinical operations, research data, and teaching workflows on top of everything else. The data unification approach Bob shares applies directly to environments with that kind of complexity.</td>
+    </tr>
+    <tr>
+      <td>St. Mary's Medical Center</td>
+      <td>New CDIO appointed</td>
+      <td>With a new CDIO on board, you're likely evaluating your technology stack with fresh eyes. This session is a solid 45-minute primer on where the industry is heading with connected data and AI agents — useful context for early decisions.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ============ AE TALK TRACK ============ -->
+<h2 id="talk-track">AE Follow-Up Talk Track</h2>
+
+<div class="talk-section">
+  <h4 style="color:var(--green)">For Attendees — Conversation Starters</h4>
+  <ol style="padding-left:1.2rem">
+    <li style="margin:.6rem 0"><strong>"What was your take on Bob's point about starting with data before agents?"</strong><br><span style="color:var(--text-dim);font-size:.88rem">Opens the door to understanding where they are in their AI journey. If they agree, you're aligned. If they push back, you learn what's driving their urgency.</span></li>
+    <li style="margin:.6rem 0"><strong>"Are you seeing the agent sprawl problem he described — multiple AI pilots that don't connect?"</strong><br><span style="color:var(--text-dim);font-size:.88rem">Positions Agent Fabric as the answer. Most orgs have 3-5 disconnected AI efforts. This question surfaces their pain.</span></li>
+    <li style="margin:.6rem 0"><strong>"Which part of the session felt most relevant to what your team is working on right now?"</strong><br><span style="color:var(--text-dim);font-size:.88rem">Let them tell you where to focus. Their answer tells you whether to lead with MuleSoft (integration), Data 360 (data), or Agentforce (AI agents).</span></li>
+  </ol>
+</div>
+
+<div class="talk-section">
+  <h4 style="color:var(--red)">For No-Shows — Key Insight + Offer</h4>
+  <p style="margin-bottom:.8rem"><strong>Lead with this insight:</strong></p>
+  <p style="background:var(--card);padding:.8rem 1rem;border-radius:8px;font-size:.92rem">"The biggest takeaway from the session was Bob Heyl explaining that the orgs getting real ROI from AI agents aren't the ones with the best models — they're the ones who built the data and integration foundation first. He called it 'feeding the agent clean data instead of asking it to clean the data.' That one line landed with the whole audience."</p>
+  <p style="margin-top:.8rem"><strong>Then offer:</strong> "I've got the recording — happy to send it over. Or if you'd rather, I can walk you through the 3 key points in 15 minutes and we can see if any of it maps to what you're working on."</p>
+</div>
+
+<div class="talk-section">
+  <h4 style="color:var(--yellow)">Objection Handlers</h4>
+
+  <div class="objection">
+    <div class="q">"We're already invested in [competitor] for integration."</div>
+    <div class="a">"Makes sense — most of the organizations in the session have existing integration tools. MuleSoft doesn't require rip-and-replace. The value of this approach is that it connects what you already have into a unified data layer that agents can actually use. Bob's team at CareFirst kept their existing systems and layered MuleSoft on top. Want me to show you what that looks like in a 30-minute demo?"</div>
+  </div>
+
+  <div class="objection">
+    <div class="q">"We're not ready for AI agents yet."</div>
+    <div class="a">"That's actually the smart position. Bob's whole point was that you shouldn't start with agents — you start with clean, connected data. If you get the data foundation right now, you're ready for agents whenever the business is. The organizations that skip that step end up rebuilding later. Would a deeper look at the data and integration layer — separate from the AI piece — be useful?"</div>
+  </div>
+
+  <div class="objection">
+    <div class="q">"We don't have budget for new platforms right now."</div>
+    <div class="a">"Totally fair. One thing that came up in the session was the ROI timeline — CareFirst saw value in months, not years, because they started with high-impact integration use cases that pay for themselves. Things like automating prior auth data exchange or consolidating patient data across systems. If I could show you a use case that has a clear payback in Q1, would that change the budget conversation?"</div>
+  </div>
+</div>
+
+<div class="talk-section">
+  <h4 style="color:var(--purple)">Next Step Options (pick one per conversation)</h4>
+  <table>
+    <tr><td style="color:#fff;font-weight:600;white-space:nowrap">Demo</td><td>"Let me show you the Data 360 + MuleSoft + Agentforce stack in action — 30 minutes, your use case, no slides."</td></tr>
+    <tr><td style="color:#fff;font-weight:600;white-space:nowrap">Technical Deep-Dive</td><td>"Want to get your integration architect on a call? Our solution engineers can map out how this fits with your current stack — EHR, claims, whatever you're running."</td></tr>
+    <tr><td style="color:#fff;font-weight:600;white-space:nowrap">Peer Reference</td><td>"Would it help to hear from another healthcare org that's been through this? I can connect you with a team that's 6 months into their deployment."</td></tr>
+    <tr><td style="color:#fff;font-weight:600;white-space:nowrap">Executive Briefing</td><td>"If your CIO/CTO wants the strategic view, we can set up a 45-minute executive briefing with our healthcare practice leads — tailored to your org's priorities."</td></tr>
+  </table>
+</div>
+
+<!-- ============ UTM REFERENCE ============ -->
+<h2>UTM Reference</h2>
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem;font-family:monospace;font-size:.82rem;overflow-x:auto;word-break:break-all">
+utm_source=ae_outreach&amp;utm_medium=email&amp;utm_campaign=bcbs-payer-webinar&amp;utm_content=email-{number}&amp;utm_term={account-slug}
+</div>
+<p style="font-size:.82rem;color:var(--text-dim);margin-top:.5rem">Replace <code>{number}</code> with 1-4, 5a, or 5b. Replace <code>{account-slug}</code> with lowercase-hyphenated account name (e.g., <code>carefirst-bcbs</code>).</p>
+
+<p style="text-align:center;color:var(--text-dim);font-size:.75rem;margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border)">Campaign ID: 701ed00001142BwAAI &middot; Built for AE use only &middot; Do not forward to prospects</p>
+
+</div><!-- /container -->
+
+<script>
+function toggleCard(header){
+  header.closest('.email-card').classList.toggle('open');
+}
+
+function copyEmail(id){
+  const el=document.getElementById(id);
+  const html=el.innerHTML;
+  const blob=new Blob([html],{type:'text/html'});
+  const item=new ClipboardItem({'text/html':blob,'text/plain':new Blob([html],{type:'text/plain'})});
+  navigator.clipboard.write([item]).then(()=>{
+    const btn=event.target.closest('.copy-btn');
+    btn.classList.add('copied');btn.textContent='Copied!';
+    setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='&#128203; Copy Email HTML';},2000);
+  });
+}
+
+function copyText(id){
+  const el=document.getElementById(id);
+  navigator.clipboard.writeText(el.textContent.trim()).then(()=>{
+    const btn=event.target.closest('.copy-btn');
+    btn.classList.add('copied');btn.textContent='Copied!';
+    setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='&#128196; Copy Plain Text';},2000);
+  });
+}
+
+// Open first card by default
+document.querySelector('.email-card').classList.add('open');
+</script>
+</body>
+</html>
