@@ -23,11 +23,19 @@ h3{font-size:1.1rem;color:#fff;margin:1.2rem 0 .6rem}
 h4{font-size:.95rem;color:var(--accent);margin:.8rem 0 .4rem}
 
 /* Header */
-.header{padding:2rem 0 1rem;border-bottom:1px solid var(--border);margin-bottom:2rem}
+.header{padding:2rem 0 1rem;border-bottom:1px solid var(--border);margin-bottom:0}
 .header .badge{display:inline-block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:20px;margin-right:.5rem;margin-bottom:.5rem}
 .badge-live{background:var(--green);color:#000}
 .badge-id{background:var(--border);color:var(--text)}
 .badge-accounts{background:var(--purple);color:#fff}
+
+/* Tabs */
+.tab-bar{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:2rem}
+.tab-btn{padding:.8rem 1.5rem;font-size:.9rem;font-weight:600;color:var(--text-dim);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;cursor:pointer;transition:all .15s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:#fff;border-bottom-color:var(--accent)}
+.tab-content{display:none}
+.tab-content.active{display:block}
 
 /* Meta grid */
 .meta-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin:1.5rem 0}
@@ -97,12 +105,27 @@ tr:hover{background:var(--hover)}
 .callout-warn{border-left-color:var(--yellow)}
 .callout-success{border-left-color:var(--green)}
 
+/* Hook preview cards (Tab 2) */
+.hook-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:16px;overflow:hidden}
+.hook-card-head{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.hook-card-head h3{font-size:15px;font-weight:600;margin:0}
+.hook-badge{font-size:11px;padding:2px 10px;border-radius:4px;font-weight:600;background:rgba(99,102,241,.15);color:#818cf8}
+.hook-card-body{padding:20px}
+.hook-text{font-size:14px;line-height:1.65;color:var(--text);margin-bottom:14px;border-left:3px solid var(--accent);padding-left:14px}
+.hook-contacts{font-size:12px;color:var(--text-dim)}
+.hook-contacts span{display:inline-block;background:rgba(255,255,255,.05);padding:2px 8px;border-radius:4px;margin:2px 4px 2px 0}
+.hook-toggle{font-size:12px;color:#818cf8;cursor:pointer;text-decoration:underline;margin-top:8px;display:inline-block}
+.hook-email-preview{background:#fff;color:#333;border-radius:8px;padding:20px;font-size:14px;line-height:1.6;margin-top:12px;display:none}
+.hook-email-preview a{color:#0176d3}
+.hook-email-preview ul{margin:8px 0 16px 20px}
+
 /* Responsive */
 @media(max-width:600px){
   .meta-grid{grid-template-columns:1fr}
   .email-header{flex-direction:column;align-items:flex-start;gap:.4rem}
   table{font-size:.8rem}
   th,td{padding:.5rem .4rem}
+  .tab-btn{padding:.6rem .8rem;font-size:.82rem}
 }
 </style>
 </head>
@@ -118,12 +141,31 @@ tr:hover{background:var(--hover)}
   <p style="color:var(--text-dim);font-size:.92rem">CareFirst BCBS CTO on scaling AI for payers &mdash; MuleSoft, Data 360, Agentforce</p>
 </div>
 
-<!-- ============ JANE'S STEP-BY-STEP ============ -->
+<!-- ============ TAB BAR ============ -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('campaign')">Campaign</button>
+  <button class="tab-btn" onclick="switchTab('hooks')">Hook Preview</button>
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB 1: CAMPAIGN                                              -->
+<!-- ============================================================ -->
+<div class="tab-content active" id="tab-campaign">
+
+<!-- JANE'S STEP-BY-STEP -->
 <div class="steps" id="instructions">
   <h3 style="margin-top:0;color:var(--accent)">Step-by-Step Instructions for Jane</h3>
   <p style="color:var(--text-dim);font-size:.88rem;margin-bottom:.8rem">There are <strong>3 Google Sheets</strong> ("books") &mdash; one per email. Each book has its own script already embedded. You open the book and click Send. That's it.</p>
   <ol>
-    <li><strong>Book 1 (Invite)</strong> &mdash; Already sent on March 16. Nothing to do. &#10003;</li>
+    <li><strong>Book 1 (Invite)</strong> &mdash; Send on <strong>Monday, March 17</strong> or when ready.
+      <ol style="margin-top:.3rem;padding-left:1.2rem;list-style-type:lower-alpha">
+        <li>Open the Google Sheet named <strong>"Payer Webinar &mdash; Email 1 (Invite)"</strong></li>
+        <li>Verify contacts are in the sheet (rows 3 and down). Row 2 is the test row &mdash; don't touch it.</li>
+        <li>Click <strong>Mail Merge &mdash; Email 1 &rarr; Send Test</strong> in the menu bar. Check your inbox.</li>
+        <li>If the test looks good, click <strong>Mail Merge &mdash; Email 1 &rarr; Send All</strong>.</li>
+        <li>The "Email Sent" column (G) fills in with timestamps. When the popup says "Done!" &mdash; you're done.</li>
+      </ol>
+    </li>
     <li><strong>Book 2 (Reminder)</strong> &mdash; Open on <strong>Tuesday, March 24</strong>.
       <ol style="margin-top:.3rem;padding-left:1.2rem;list-style-type:lower-alpha">
         <li>Open the Google Sheet named <strong>"Payer Webinar &mdash; Email 2 (Reminder)"</strong></li>
@@ -138,6 +180,7 @@ tr:hover{background:var(--hover)}
         <li>Open the Google Sheet named <strong>"Payer Webinar &mdash; Email 3 (Day-of)"</strong></li>
         <li>Click <strong>Mail Merge &mdash; Email 3 &rarr; Send Test</strong>. Check your inbox.</li>
         <li>If the test looks good, click <strong>Mail Merge &mdash; Email 3 &rarr; Send All</strong>.</li>
+        <li>This goes to <strong>everyone</strong> &mdash; all 31 contacts get the day-of reminder.</li>
       </ol>
     </li>
   </ol>
@@ -153,7 +196,7 @@ tr:hover{background:var(--hover)}
   </div>
 </div>
 
-<!-- ============ EVENT DETAILS ============ -->
+<!-- EVENT DETAILS -->
 <h2>Event Details</h2>
 <div class="meta-grid">
   <div class="meta-card"><div class="label">Date &amp; Time</div><div class="value">Thursday, March 26, 2026<br>12:00 PM ET</div></div>
@@ -161,7 +204,7 @@ tr:hover{background:var(--hover)}
   <div class="meta-card"><div class="label">Registration</div><div class="value"><a href="https://sfdc.co/brdokz" target="_blank">sfdc.co/brdokz</a></div></div>
   <div class="meta-card"><div class="label">Sender</div><div class="value">Jane Pollock<br>Integration &amp; API Enablement<br>MuleSoft, A Salesforce Company<br>M: (470) 471-8908</div></div>
   <div class="meta-card"><div class="label">Audience</div><div class="value">15 accounts &middot; 31 contacts<br>Payer, payer-adjacent, provider networks</div></div>
-  <div class="meta-card"><div class="label">Tracking</div><div class="value">Beacon pixel per email<br><a href="https://m9751.github.io/beacon-dashboard/" target="_blank">Beacon Dashboard</a></div></div>
+  <div class="meta-card"><div class="label">Tracking</div><div class="value">Beacon pixel per email<br><a href="https://m9751.github.io/beacon-dashboard/" target="_blank">Beacon Dashboard</a><br><a href="https://smokin-territory.vercel.app/hook-preview.html" target="_blank">Hook Tracker</a></div></div>
 </div>
 
 <h3>Featured Speaker</h3>
@@ -184,7 +227,7 @@ tr:hover{background:var(--hover)}
   <tr><td style="color:var(--yellow);font-weight:600">Cookie 2</td><td>Agent Fabric + A2A/MCP protocol &mdash; governed agent collaboration, no agent sprawl</td></tr>
 </table>
 
-<!-- ============ SEND SCHEDULE ============ -->
+<!-- SEND SCHEDULE -->
 <h2>Send Schedule</h2>
 <table>
   <thead><tr><th>#</th><th>Name</th><th>Google Sheet</th><th>Send Date</th><th>Audience</th><th>Status</th></tr></thead>
@@ -193,9 +236,9 @@ tr:hover{background:var(--hover)}
       <td style="color:#fff;font-weight:700">1</td>
       <td>Invite</td>
       <td>Book 1</td>
-      <td>Sun, March 16</td>
+      <td>Mon, March 17</td>
       <td>All 31 contacts</td>
-      <td><span class="status status-sent">SENT</span></td>
+      <td><span class="status status-ready">READY</span></td>
     </tr>
     <tr>
       <td style="color:#fff;font-weight:700">2</td>
@@ -203,7 +246,7 @@ tr:hover{background:var(--hover)}
       <td>Book 2</td>
       <td>Tue, March 24</td>
       <td>All 31 contacts</td>
-      <td><span class="status status-ready">READY</span></td>
+      <td><span class="status status-upcoming">UPCOMING</span></td>
     </tr>
     <tr>
       <td style="color:#fff;font-weight:700">3</td>
@@ -220,13 +263,13 @@ tr:hover{background:var(--hover)}
   <strong>Post-event follow-up</strong> (recording + meeting ask) will be built after the March 26 event if needed. Not included in the 3-book set.
 </div>
 
-<!-- ============ EMAILS ============ -->
+<!-- EMAILS -->
 <h2>Email Sequence</h2>
 
-<!-- ===== EMAIL 1 ===== -->
+<!-- EMAIL 1 -->
 <div class="email-card" id="email-1">
   <div class="email-header" onclick="toggleCard(this)">
-    <div class="title"><span class="num">1</span><span class="name">Invite</span><span class="date">March 16, 2026 &mdash; <span class="status status-sent">SENT</span></span></div>
+    <div class="title"><span class="num">1</span><span class="name">Invite</span><span class="date">Mon, March 17 &mdash; <span class="status status-ready">READY</span></span></div>
     <span class="chevron">&#9660;</span>
   </div>
   <div class="email-body">
@@ -281,10 +324,10 @@ M: (470) 471-8908</div>
   </div>
 </div>
 
-<!-- ===== EMAIL 2 ===== -->
+<!-- EMAIL 2 -->
 <div class="email-card" id="email-2">
   <div class="email-header" onclick="toggleCard(this)">
-    <div class="title"><span class="num">2</span><span class="name">Reminder</span><span class="date">March 24, 2026 &mdash; <span class="status status-ready">READY</span></span></div>
+    <div class="title"><span class="num">2</span><span class="name">Reminder</span><span class="date">Tue, March 24 &mdash; <span class="status status-upcoming">UPCOMING</span></span></div>
     <span class="chevron">&#9660;</span>
   </div>
   <div class="email-body">
@@ -328,16 +371,17 @@ M: (470) 471-8908</div>
   </div>
 </div>
 
-<!-- ===== EMAIL 3 ===== -->
+<!-- EMAIL 3 -->
 <div class="email-card" id="email-3">
   <div class="email-header" onclick="toggleCard(this)">
-    <div class="title"><span class="num">3</span><span class="name">Day-of Reminder</span><span class="date">March 26, 2026 AM &mdash; <span class="status status-upcoming">UPCOMING</span></span></div>
+    <div class="title"><span class="num">3</span><span class="name">Day-of Reminder</span><span class="date">Thu, March 26 AM &mdash; <span class="status status-upcoming">UPCOMING</span></span></div>
     <span class="chevron">&#9660;</span>
   </div>
   <div class="email-body">
     <div class="subject-line">Starts at noon today: CareFirst BCBS CTO on AI for payers</div>
     <h4>Merge Fields</h4>
     <p style="font-size:.85rem;color:var(--text-dim)"><code>{{First Name}}</code> &middot; <code>{{Company}}</code> &middot; <code>{{Slug}}</code></p>
+    <div class="callout callout-success" style="margin:.5rem 0"><strong>Audience: EVERYONE</strong> &mdash; all 31 contacts get the day-of reminder regardless of registration status.</div>
     <div class="copy-row">
       <button class="copy-btn" onclick="copyEmail('email3-html')">Copy Email HTML</button>
       <button class="copy-btn" onclick="copyText('email3-plain')">Copy Plain Text</button>
@@ -369,8 +413,8 @@ M: (470) 471-8908</div>
   </div>
 </div>
 
-<!-- ============ ACCOUNT HOOKS ============ -->
-<h2 id="hooks">Account Hooks (15 Accounts)</h2>
+<!-- ACCOUNT HOOKS -->
+<h2 id="hooks-section">Account Hooks (15 Accounts)</h2>
 <p style="color:var(--text-dim);font-size:.88rem;margin-bottom:1rem">Email 1 uses <code>{{Hook}}</code> &mdash; the personalized paragraph for each account. Emails 2 and 3 use <code>{{Company}}</code> only. These hooks are embedded in the Google Sheet.</p>
 
 <table class="hook-table">
@@ -454,7 +498,7 @@ M: (470) 471-8908</div>
   </tbody>
 </table>
 
-<!-- ============ CONTACT LIST ============ -->
+<!-- CONTACT LIST -->
 <h2 id="contacts">Contacts (31 Recipients)</h2>
 <table>
   <thead><tr><th>Account</th><th>First Name</th><th>Email</th></tr></thead>
@@ -494,7 +538,7 @@ M: (470) 471-8908</div>
   </tbody>
 </table>
 
-<!-- ============ AE TALK TRACK ============ -->
+<!-- AE TALK TRACK -->
 <h2 id="talk-track">AE Follow-Up Talk Track (Post-Event)</h2>
 
 <div class="talk-section">
@@ -542,7 +586,7 @@ M: (470) 471-8908</div>
   </table>
 </div>
 
-<!-- ============ BEACON TRACKING ============ -->
+<!-- BEACON TRACKING -->
 <h2>Beacon Tracking</h2>
 <table>
   <thead><tr><th>Email</th><th>Beacon Parameter</th><th>Dashboard</th></tr></thead>
@@ -558,9 +602,314 @@ M: (470) 471-8908</div>
 
 <p style="text-align:center;color:var(--text-dim);font-size:.75rem;margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border)">Campaign: payer-webinar-2026-03-26 &middot; 15 accounts &middot; 31 contacts &middot; Built for AE use only &middot; Do not forward to prospects</p>
 
+</div><!-- /tab-campaign -->
+
+<!-- ============================================================ -->
+<!-- TAB 2: HOOK PREVIEW                                          -->
+<!-- ============================================================ -->
+<div class="tab-content" id="tab-hooks">
+
+<p style="color:var(--text-dim);font-size:.88rem;margin-bottom:1.5rem">15 accounts &middot; 31 sends &middot; March 26 event &middot; Click "Preview email" to see the full merged output for each account.</p>
+
+<!-- 1. Confluent Health -->
+<div class="hook-card">
+<div class="hook-card-head"><h3>1. Confluent Health</h3><span class="hook-badge">confluent-health</span></div>
+<div class="hook-card-body">
+<div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Hook</div>
+<div class="hook-text">With 50+ clinic brands under one roof and an active M&amp;A pipeline, you're living the integration challenge Bob Heyl will break down &mdash; how CareFirst connected fragmented payer data to power AI agents across the enterprise.</div>
+<div class="hook-contacts">Sends to: <span>Lee &mdash; lee@goconfluent.com</span></div>
+<span class="hook-toggle" onclick="var el=this.nextElementSibling;el.style.display=el.style.display==='block'?'none':'block';this.textContent=el.style.display==='block'?'Hide email':'Preview email'">Preview email</span>
+<div class="hook-email-preview"><p>Hi Lee,</p>
+<p>With 50+ clinic brands under one roof and an active M&amp;A pipeline, you're living the integration challenge Bob Heyl will break down &mdash; how CareFirst connected fragmented payer data to power AI agents across the enterprise.</p>
+<p>We have a webinar coming up on <strong>Thursday, March 26 at 12pm ET</strong> that connects directly to this:</p>
+<p><strong>CareFirst BlueCross BlueShield&rsquo;s Chief Technology &amp; Product Officer Bob Heyl</strong> is joining four Salesforce experts to walk through how payers are using Agentforce, MuleSoft, and Data 360 to harmonize data and scale AI without the complexity.</p>
+<p>The session covers:</p>
+<ul><li>How Data 360 + MuleSoft create unified context for AI agents</li><li>Agent Fabric &mdash; governed agent-to-agent communication across systems</li><li>Moving past &ldquo;agent sprawl&rdquo; to a scalable strategy that delivers today</li></ul>
+<p><a href="https://sfdc.co/brdokz" style="color:#0176d3;font-weight:bold">Register Now</a></p>
+<p style="margin-top:16px">Happy to chat after if any of it resonates with what Confluent Health is working through.</p>
+<p>Best,<br>Jane Pollock<br>Integration &amp; API Enablement<br>MuleSoft, A Salesforce Company<br>M: (470) 471-8908</p></div>
+</div></div>
+
+<!-- 2. Summit BHC -->
+<div class="hook-card">
+<div class="hook-card-head"><h3>2. Summit BHC</h3><span class="hook-badge">summit-bhc</span></div>
+<div class="hook-card-body">
+<div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Hook</div>
+<div class="hook-text">Summit's 30+ behavioral health facilities generate data across admissions, clinical, and outreach systems. Bob Heyl's playbook for scaling AI across a payer enterprise maps directly to the multi-site data unification challenge you're solving.</div>
+<div class="hook-contacts">Sends to: <span>Max &mdash; max@summitbhc.com</span><span>Nicole &mdash; nbagwell@summitbhc.com</span><span>Curt &mdash; curt.selmon@summitbhc.com</span></div>
+<span class="hook-toggle" onclick="var el=this.nextElementSibling;el.style.display=el.style.display==='block'?'none':'block';this.textContent=el.style.display==='block'?'Hide email':'Preview email'">Preview email</span>
+<div class="hook-email-preview"><p>Hi Max,</p>
+<p>Summit's 30+ behavioral health facilities generate data across admissions, clinical, and outreach systems. Bob Heyl's playbook for scaling AI across a payer enterprise maps directly to the multi-site data unification challenge you're solving.</p>
+<p>We have a webinar coming up on <strong>Thursday, March 26 at 12pm ET</strong> that connects directly to this:</p>
+<p><strong>CareFirst BlueCross BlueShield&rsquo;s Chief Technology &amp; Product Officer Bob Heyl</strong> is joining four Salesforce experts to walk through how payers are using Agentforce, MuleSoft, and Data 360 to harmonize data and scale AI without the complexity.</p>
+<p>The session covers:</p>
+<ul><li>How Data 360 + MuleSoft create unified context for AI agents</li><li>Agent Fabric &mdash; governed agent-to-agent communication across systems</li><li>Moving past &ldquo;agent sprawl&rdquo; to a scalable strategy that delivers today</li></ul>
+<p><a href="https://sfdc.co/brdokz" style="color:#0176d3;font-weight:bold">Register Now</a></p>
+<p style="margin-top:16px">Happy to chat after if any of it resonates with what Summit BHC is working through.</p>
+<p>Best,<br>Jane Pollock<br>Integration &amp; API Enablement<br>MuleSoft, A Salesforce Company<br>M: (470) 471-8908</p></div>
+</div></div>
+
+<!-- 3. Nova Healthcare -->
+<div class="hook-card">
+<div class="hook-card-head"><h3>3. Nova Healthcare</h3><span class="hook-badge">nova-healthcare</span></div>
+<div class="hook-card-body">
+<div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Hook</div>
+<div class="hook-text">Nova's platform sits between payers, providers, and patients &mdash; exactly the kind of multi-stakeholder data problem Bob Heyl tackled at CareFirst. His session covers how MuleSoft and Agent Fabric connect those layers without ripping out what's already working.</div>
+<div class="hook-contacts">Sends to: <span>Jerame &mdash; jdellapenta@novahealthcare.com</span></div>
+<span class="hook-toggle" onclick="var el=this.nextElementSibling;el.style.display=el.style.display==='block'?'none':'block';this.textContent=el.style.display==='block'?'Hide email':'Preview email'">Preview email</span>
+<div class="hook-email-preview"><p>Hi Jerame,</p>
+<p>Nova's platform sits between payers, providers, and patients &mdash; exactly the kind of multi-stakeholder data problem Bob Heyl tackled at CareFirst. His session covers how MuleSoft and Agent Fabric connect those layers without ripping out what's already working.</p>
+<p>We have a webinar coming up on <strong>Thursday, March 26 at 12pm ET</strong> that connects directly to this:</p>
+<p><strong>CareFirst BlueCross BlueShield&rsquo;s Chief Technology &amp; Product Officer Bob Heyl</strong> is joining four Salesforce experts to walk through how payers are using Agentforce, MuleSoft, and Data 360 to harmonize data and scale AI without the complexity.</p>
+<p>The session covers:</p>
+<ul><li>How Data 360 + MuleSoft create unified context for AI agents</li><li>Agent Fabric &mdash; governed agent-to-agent communication across systems</li><li>Moving past &ldquo;agent sprawl&rdquo; to a scalable strategy that delivers today</li></ul>
+<p><a href="https://sfdc.co/brdokz" style="color:#0176d3;font-weight:bold">Register Now</a></p>
+<p style="margin-top:16px">Happy to chat after if any of it resonates with what Nova Healthcare is working through.</p>
+<p>Best,<br>Jane Pollock<br>Integration &amp; API Enablement<br>MuleSoft, A Salesforce Company<br>M: (470) 471-8908</p></div>
+</div></div>
+
+<!-- 4. Duly Health and Care -->
+<div class="hook-card">
+<div class="hook-card-head"><h3>4. Duly Health and Care</h3><span class="hook-badge">duly-health</span></div>
+<div class="hook-card-body">
+<div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Hook</div>
+<div class="hook-text">Duly's 900+ physicians across Chicagoland means dozens of clinical and operational systems that need to talk to each other. Bob Heyl will show how CareFirst broke through that same fragmentation to deploy AI agents at enterprise scale.</div>
+<div class="hook-contacts">Sends to: <span>Nick &mdash; nicholas.martin@dupagemd.com</span></div>
+<span class="hook-toggle" onclick="var el=this.nextElementSibling;el.style.display=el.style.display==='block'?'none':'block';this.textContent=el.style.display==='block'?'Hide email':'Preview email'">Preview email</span>
+<div class="hook-email-preview"><p>Hi Nick,</p>
+<p>Duly's 900+ physicians across Chicagoland means dozens of clinical and operational systems that need to talk to each other. Bob Heyl will show how CareFirst broke through that same fragmentation to deploy AI agents at enterprise scale.</p>
+<p>We have a webinar coming up on <strong>Thursday, March 26 at 12pm ET</strong> that connects directly to this:</p>
+<p><strong>CareFirst BlueCross BlueShield&rsquo;s Chief Technology &amp; Product Officer Bob Heyl</strong> is joining four Salesforce experts to walk through how payers are using Agentforce, MuleSoft, and Data 360 to harmonize data and scale AI without the complexity.</p>
+<p>The session covers:</p>
+<ul><li>How Data 360 + MuleSoft create unified context for AI agents</li><li>Agent Fabric &mdash; governed agent-to-agent communication across systems</li><li>Moving past &ldquo;agent sprawl&rdquo; to a scalable strategy that delivers today</li></ul>
+<p><a href="https://sfdc.co/brdokz" style="color:#0176d3;font-weight:bold">Register Now</a></p>
+<p style="margin-top:16px">Happy to chat after if any of it resonates with what Duly Health and Care is working through.</p>
+<p>Best,<br>Jane Pollock<br>Integration &amp; API Enablement<br>MuleSoft, A Salesforce Company<br>M: (470) 471-8908</p></div>
+</div></div>
+
+<!-- 5. American Addiction Centers -->
+<div class="hook-card">
+<div class="hook-card-head"><h3>5. American Addiction Centers</h3><span class="hook-badge">aac</span></div>
+<div class="hook-card-body">
+<div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Hook</div>
+<div class="hook-text">AAC's national footprint across 20+ treatment facilities &mdash; each with its own clinical workflows and data &mdash; mirrors the integration complexity Bob Heyl solved at CareFirst before deploying AI. His approach to unifying data first, then layering agents on top, is directly relevant.</div>
+<div class="hook-contacts">Sends to: <span>Sumit &mdash; ssehgal@contactaac.com</span><span>Brad &mdash; boverlund@contactaac.com</span><span>Steven &mdash; squirion@contactaac.com</span></div>
+<span class="hook-toggle" onclick="var el=this.nextElementSibling;el.style.display=el.style.display==='block'?'none':'block';this.textContent=el.style.display==='block'?'Hide email':'Preview email'">Preview email</span>
+<div class="hook-email-preview"><p>Hi Sumit,</p>
+<p>AAC's national footprint across 20+ treatment facilities &mdash; each with its own clinical workflows and data &mdash; mirrors the integration complexity Bob Heyl solved at CareFirst before deploying AI. His approach to unifying data first, then layering agents on top, is directly relevant.</p>
+<p>We have a webinar coming up on <strong>Thursday, March 26 at 12pm ET</strong> that connects directly to this:</p>
+<p><strong>CareFirst BlueCross BlueShield&rsquo;s Chief Technology &amp; Product Officer Bob Heyl</strong> is joining four Salesforce experts to walk through how payers are using Agentforce, MuleSoft, and Data 360 to harmonize data and scale AI without the complexity.</p>
+<p>The session covers:</p>
+<ul><li>How Data 360 + MuleSoft create unified context for AI agents</li><li>Agent Fabric &mdash; governed agent-to-agent communication across systems</li><li>Moving past &ldquo;agent sprawl&rdquo; to a scalable strategy that delivers today</li></ul>
+<p><a href="https://sfdc.co/brdokz" style="color:#0176d3;font-weight:bold">Register Now</a></p>
+<p style="margin-top:16px">Happy to chat after if any of it resonates with what American Addiction Centers is working through.</p>
+<p>Best,<br>Jane Pollock<br>Integration &amp; API Enablement<br>MuleSoft, A Salesforce Company<br>M: (470) 471-8908</p></div>
+</div></div>
+
+<!-- 6. Phreesia -->
+<div class="hook-card">
+<div class="hook-card-head"><h3>6. Phreesia</h3><span class="hook-badge">phreesia</span></div>
+<div class="hook-card-body">
+<div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Hook</div>
+<div class="hook-text">Phreesia processes millions of patient interactions that feed into provider and payer workflows. Bob Heyl's session on building AI agents with Agent Fabric shows how platforms like yours can become the connective tissue &mdash; not just the intake layer.</div>
+<div class="hook-contacts">Sends to: <span>Jack &mdash; jcallahan@phreesia.com</span><span>Nickolas &mdash; nickolas.kemske@phreesia.com</span><span>Michael &mdash; michael.damkot@phreesia.com</span></div>
+<span class="hook-toggle" onclick="var el=this.nextElementSibling;el.style.display=el.style.display==='block'?'none':'block';this.textContent=el.style.display==='block'?'Hide email':'Preview email'">Preview email</span>
+<div class="hook-email-preview"><p>Hi Jack,</p>
+<p>Phreesia processes millions of patient interactions that feed into provider and payer workflows. Bob Heyl's session on building AI agents with Agent Fabric shows how platforms like yours can become the connective tissue &mdash; not just the intake layer.</p>
+<p>We have a webinar coming up on <strong>Thursday, March 26 at 12pm ET</strong> that connects directly to this:</p>
+<p><strong>CareFirst BlueCross BlueShield&rsquo;s Chief Technology &amp; Product Officer Bob Heyl</strong> is joining four Salesforce experts to walk through how payers are using Agentforce, MuleSoft, and Data 360 to harmonize data and scale AI without the complexity.</p>
+<p>The session covers:</p>
+<ul><li>How Data 360 + MuleSoft create unified context for AI agents</li><li>Agent Fabric &mdash; governed agent-to-agent communication across systems</li><li>Moving past &ldquo;agent sprawl&rdquo; to a scalable strategy that delivers today</li></ul>
+<p><a href="https://sfdc.co/brdokz" style="color:#0176d3;font-weight:bold">Register Now</a></p>
+<p style="margin-top:16px">Happy to chat after if any of it resonates with what Phreesia is working through.</p>
+<p>Best,<br>Jane Pollock<br>Integration &amp; API Enablement<br>MuleSoft, A Salesforce Company<br>M: (470) 471-8908</p></div>
+</div></div>
+
+<!-- 7. Tivity Health -->
+<div class="hook-card">
+<div class="hook-card-head"><h3>7. Tivity Health</h3><span class="hook-badge">tivity-health</span></div>
+<div class="hook-card-body">
+<div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Hook</div>
+<div class="hook-text">Tivity's SilverSneakers and WholeHealth platforms serve millions of members through payer partnerships. Bob Heyl will walk through how CareFirst is using MuleSoft and Agentforce to scale AI across exactly that kind of payer-member ecosystem.</div>
+<div class="hook-contacts">Sends to: <span>Jason &mdash; jason.lawrence@tivityhealth.com</span><span>Jeremy &mdash; jeremy.tull@tivityhealth.com</span></div>
+<span class="hook-toggle" onclick="var el=this.nextElementSibling;el.style.display=el.style.display==='block'?'none':'block';this.textContent=el.style.display==='block'?'Hide email':'Preview email'">Preview email</span>
+<div class="hook-email-preview"><p>Hi Jason,</p>
+<p>Tivity's SilverSneakers and WholeHealth platforms serve millions of members through payer partnerships. Bob Heyl will walk through how CareFirst is using MuleSoft and Agentforce to scale AI across exactly that kind of payer-member ecosystem.</p>
+<p>We have a webinar coming up on <strong>Thursday, March 26 at 12pm ET</strong> that connects directly to this:</p>
+<p><strong>CareFirst BlueCross BlueShield&rsquo;s Chief Technology &amp; Product Officer Bob Heyl</strong> is joining four Salesforce experts to walk through how payers are using Agentforce, MuleSoft, and Data 360 to harmonize data and scale AI without the complexity.</p>
+<p>The session covers:</p>
+<ul><li>How Data 360 + MuleSoft create unified context for AI agents</li><li>Agent Fabric &mdash; governed agent-to-agent communication across systems</li><li>Moving past &ldquo;agent sprawl&rdquo; to a scalable strategy that delivers today</li></ul>
+<p><a href="https://sfdc.co/brdokz" style="color:#0176d3;font-weight:bold">Register Now</a></p>
+<p style="margin-top:16px">Happy to chat after if any of it resonates with what Tivity Health is working through.</p>
+<p>Best,<br>Jane Pollock<br>Integration &amp; API Enablement<br>MuleSoft, A Salesforce Company<br>M: (470) 471-8908</p></div>
+</div></div>
+
+<!-- 8. BCBS Kansas (updated with 4 contacts) -->
+<div class="hook-card">
+<div class="hook-card-head"><h3>8. Blue Cross Blue Shield of Kansas</h3><span class="hook-badge">bcbs-kansas</span></div>
+<div class="hook-card-body">
+<div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Hook</div>
+<div class="hook-text">Bob Heyl is a fellow BCBS CTO &mdash; his session on how CareFirst is scaling AI with MuleSoft and Agentforce is a direct peer conversation. Same compliance requirements, same member data challenges, same BCBSA ecosystem.</div>
+<div class="hook-contacts">Sends to: <span>Erin &mdash; erin.nolte@bcbsks.com</span><span>Mischa &mdash; mischa.mchenry@bcbsks.com</span><span>Drew &mdash; drew.shirack@bcbsks.com</span><span>Lana &mdash; lana.pruett@bcbsks.com</span></div>
+<span class="hook-toggle" onclick="var el=this.nextElementSibling;el.style.display=el.style.display==='block'?'none':'block';this.textContent=el.style.display==='block'?'Hide email':'Preview email'">Preview email</span>
+<div class="hook-email-preview"><p>Hi Erin,</p>
+<p>Bob Heyl is a fellow BCBS CTO &mdash; his session on how CareFirst is scaling AI with MuleSoft and Agentforce is a direct peer conversation. Same compliance requirements, same member data challenges, same BCBSA ecosystem.</p>
+<p>We have a webinar coming up on <strong>Thursday, March 26 at 12pm ET</strong> that connects directly to this:</p>
+<p><strong>CareFirst BlueCross BlueShield&rsquo;s Chief Technology &amp; Product Officer Bob Heyl</strong> is joining four Salesforce experts to walk through how payers are using Agentforce, MuleSoft, and Data 360 to harmonize data and scale AI without the complexity.</p>
+<p>The session covers:</p>
+<ul><li>How Data 360 + MuleSoft create unified context for AI agents</li><li>Agent Fabric &mdash; governed agent-to-agent communication across systems</li><li>Moving past &ldquo;agent sprawl&rdquo; to a scalable strategy that delivers today</li></ul>
+<p><a href="https://sfdc.co/brdokz" style="color:#0176d3;font-weight:bold">Register Now</a></p>
+<p style="margin-top:16px">Happy to chat after if any of it resonates with what Blue Cross Blue Shield of Kansas is working through.</p>
+<p>Best,<br>Jane Pollock<br>Integration &amp; API Enablement<br>MuleSoft, A Salesforce Company<br>M: (470) 471-8908</p></div>
+</div></div>
+
+<!-- 9. AnewHealth -->
+<div class="hook-card">
+<div class="hook-card-head"><h3>9. AnewHealth</h3><span class="hook-badge">anewhealth</span></div>
+<div class="hook-card-body">
+<div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Hook</div>
+<div class="hook-text">AnewHealth's pharmacy platform connects clinical data, fulfillment systems, and payer adjudication &mdash; a complex integration web. Bob Heyl's session shows how CareFirst used MuleSoft to hydrate that kind of fragmented data before deploying AI agents.</div>
+<div class="hook-contacts">Sends to: <span>Tony &mdash; tcasanova@exactcarepharmacy.com</span><span>Wayne &mdash; wayne.boatman@carepathrxllc.co</span><span>Michael &mdash; mhavanas@anewhealthrx.com</span></div>
+<span class="hook-toggle" onclick="var el=this.nextElementSibling;el.style.display=el.style.display==='block'?'none':'block';this.textContent=el.style.display==='block'?'Hide email':'Preview email'">Preview email</span>
+<div class="hook-email-preview"><p>Hi Tony,</p>
+<p>AnewHealth's pharmacy platform connects clinical data, fulfillment systems, and payer adjudication &mdash; a complex integration web. Bob Heyl's session shows how CareFirst used MuleSoft to hydrate that kind of fragmented data before deploying AI agents.</p>
+<p>We have a webinar coming up on <strong>Thursday, March 26 at 12pm ET</strong> that connects directly to this:</p>
+<p><strong>CareFirst BlueCross BlueShield&rsquo;s Chief Technology &amp; Product Officer Bob Heyl</strong> is joining four Salesforce experts to walk through how payers are using Agentforce, MuleSoft, and Data 360 to harmonize data and scale AI without the complexity.</p>
+<p>The session covers:</p>
+<ul><li>How Data 360 + MuleSoft create unified context for AI agents</li><li>Agent Fabric &mdash; governed agent-to-agent communication across systems</li><li>Moving past &ldquo;agent sprawl&rdquo; to a scalable strategy that delivers today</li></ul>
+<p><a href="https://sfdc.co/brdokz" style="color:#0176d3;font-weight:bold">Register Now</a></p>
+<p style="margin-top:16px">Happy to chat after if any of it resonates with what AnewHealth is working through.</p>
+<p>Best,<br>Jane Pollock<br>Integration &amp; API Enablement<br>MuleSoft, A Salesforce Company<br>M: (470) 471-8908</p></div>
+</div></div>
+
+<!-- 10. RxBenefits -->
+<div class="hook-card">
+<div class="hook-card-head"><h3>10. RxBenefits</h3><span class="hook-badge">rxbenefits</span></div>
+<div class="hook-card-body">
+<div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Hook</div>
+<div class="hook-text">RxBenefits sits at the intersection of employers, PBMs, and health plans &mdash; managing pharmacy data across all three. Bob Heyl's approach to connecting siloed payer systems with MuleSoft before layering AI is the same architecture pattern that makes PBM optimization scalable.</div>
+<div class="hook-contacts">Sends to: <span>LeeAshford &mdash; lclapp@rxbenefits.com</span></div>
+<span class="hook-toggle" onclick="var el=this.nextElementSibling;el.style.display=el.style.display==='block'?'none':'block';this.textContent=el.style.display==='block'?'Hide email':'Preview email'">Preview email</span>
+<div class="hook-email-preview"><p>Hi LeeAshford,</p>
+<p>RxBenefits sits at the intersection of employers, PBMs, and health plans &mdash; managing pharmacy data across all three. Bob Heyl's approach to connecting siloed payer systems with MuleSoft before layering AI is the same architecture pattern that makes PBM optimization scalable.</p>
+<p>We have a webinar coming up on <strong>Thursday, March 26 at 12pm ET</strong> that connects directly to this:</p>
+<p><strong>CareFirst BlueCross BlueShield&rsquo;s Chief Technology &amp; Product Officer Bob Heyl</strong> is joining four Salesforce experts to walk through how payers are using Agentforce, MuleSoft, and Data 360 to harmonize data and scale AI without the complexity.</p>
+<p>The session covers:</p>
+<ul><li>How Data 360 + MuleSoft create unified context for AI agents</li><li>Agent Fabric &mdash; governed agent-to-agent communication across systems</li><li>Moving past &ldquo;agent sprawl&rdquo; to a scalable strategy that delivers today</li></ul>
+<p><a href="https://sfdc.co/brdokz" style="color:#0176d3;font-weight:bold">Register Now</a></p>
+<p style="margin-top:16px">Happy to chat after if any of it resonates with what RxBenefits is working through.</p>
+<p>Best,<br>Jane Pollock<br>Integration &amp; API Enablement<br>MuleSoft, A Salesforce Company<br>M: (470) 471-8908</p></div>
+</div></div>
+
+<!-- 11. US Acute Care Solutions -->
+<div class="hook-card">
+<div class="hook-card-head"><h3>11. US Acute Care Solutions</h3><span class="hook-badge">usacs</span></div>
+<div class="hook-card-body">
+<div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Hook</div>
+<div class="hook-text">USACS operates across 350+ hospital and freestanding EDs with PE-backed growth driving acquisition velocity. Bob Heyl's session covers how to unify data across a sprawling enterprise &mdash; the prerequisite before AI can do anything useful at scale.</div>
+<div class="hook-contacts">Sends to: <span>Ryan &mdash; carlettir@usacs.com</span></div>
+<span class="hook-toggle" onclick="var el=this.nextElementSibling;el.style.display=el.style.display==='block'?'none':'block';this.textContent=el.style.display==='block'?'Hide email':'Preview email'">Preview email</span>
+<div class="hook-email-preview"><p>Hi Ryan,</p>
+<p>USACS operates across 350+ hospital and freestanding EDs with PE-backed growth driving acquisition velocity. Bob Heyl's session covers how to unify data across a sprawling enterprise &mdash; the prerequisite before AI can do anything useful at scale.</p>
+<p>We have a webinar coming up on <strong>Thursday, March 26 at 12pm ET</strong> that connects directly to this:</p>
+<p><strong>CareFirst BlueCross BlueShield&rsquo;s Chief Technology &amp; Product Officer Bob Heyl</strong> is joining four Salesforce experts to walk through how payers are using Agentforce, MuleSoft, and Data 360 to harmonize data and scale AI without the complexity.</p>
+<p>The session covers:</p>
+<ul><li>How Data 360 + MuleSoft create unified context for AI agents</li><li>Agent Fabric &mdash; governed agent-to-agent communication across systems</li><li>Moving past &ldquo;agent sprawl&rdquo; to a scalable strategy that delivers today</li></ul>
+<p><a href="https://sfdc.co/brdokz" style="color:#0176d3;font-weight:bold">Register Now</a></p>
+<p style="margin-top:16px">Happy to chat after if any of it resonates with what US Acute Care Solutions is working through.</p>
+<p>Best,<br>Jane Pollock<br>Integration &amp; API Enablement<br>MuleSoft, A Salesforce Company<br>M: (470) 471-8908</p></div>
+</div></div>
+
+<!-- 12. CCRM / Unified Women's Healthcare -->
+<div class="hook-card">
+<div class="hook-card-head"><h3>12. CCRM / Unified Women's Healthcare</h3><span class="hook-badge">ccrm</span></div>
+<div class="hook-card-body">
+<div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Hook</div>
+<div class="hook-text">Unified Women's Healthcare manages 200+ practice locations across multiple brands and specialties. Bob Heyl's framework for connecting fragmented data across a large health enterprise applies directly &mdash; especially as you scale Salesforce across the network.</div>
+<div class="hook-contacts">Sends to: <span>Samantha &mdash; samantha.baun@unifiedhc.com</span><span>Xavier &mdash; xavier.nazario@unifiedhc.com</span></div>
+<span class="hook-toggle" onclick="var el=this.nextElementSibling;el.style.display=el.style.display==='block'?'none':'block';this.textContent=el.style.display==='block'?'Hide email':'Preview email'">Preview email</span>
+<div class="hook-email-preview"><p>Hi Samantha,</p>
+<p>Unified Women's Healthcare manages 200+ practice locations across multiple brands and specialties. Bob Heyl's framework for connecting fragmented data across a large health enterprise applies directly &mdash; especially as you scale Salesforce across the network.</p>
+<p>We have a webinar coming up on <strong>Thursday, March 26 at 12pm ET</strong> that connects directly to this:</p>
+<p><strong>CareFirst BlueCross BlueShield&rsquo;s Chief Technology &amp; Product Officer Bob Heyl</strong> is joining four Salesforce experts to walk through how payers are using Agentforce, MuleSoft, and Data 360 to harmonize data and scale AI without the complexity.</p>
+<p>The session covers:</p>
+<ul><li>How Data 360 + MuleSoft create unified context for AI agents</li><li>Agent Fabric &mdash; governed agent-to-agent communication across systems</li><li>Moving past &ldquo;agent sprawl&rdquo; to a scalable strategy that delivers today</li></ul>
+<p><a href="https://sfdc.co/brdokz" style="color:#0176d3;font-weight:bold">Register Now</a></p>
+<p style="margin-top:16px">Happy to chat after if any of it resonates with what CCRM / Unified Women's Healthcare is working through.</p>
+<p>Best,<br>Jane Pollock<br>Integration &amp; API Enablement<br>MuleSoft, A Salesforce Company<br>M: (470) 471-8908</p></div>
+</div></div>
+
+<!-- 13. OneOncology -->
+<div class="hook-card">
+<div class="hook-card-head"><h3>13. OneOncology</h3><span class="hook-badge">oneoncology</span></div>
+<div class="hook-card-body">
+<div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Hook</div>
+<div class="hook-text">OneOncology's network of 600+ oncologists across independent practices creates a data unification challenge that's core to your analytics mission. Bob Heyl will show how CareFirst approached the same problem &mdash; connecting siloed data before deploying AI agents.</div>
+<div class="hook-contacts">Sends to: <span>Erica &mdash; erica.hansen@oneoncology.com</span><span>Robert &mdash; robert.collins@oneoncology.com</span><span>Justice &mdash; justice.west@oneoncology.com</span></div>
+<span class="hook-toggle" onclick="var el=this.nextElementSibling;el.style.display=el.style.display==='block'?'none':'block';this.textContent=el.style.display==='block'?'Hide email':'Preview email'">Preview email</span>
+<div class="hook-email-preview"><p>Hi Erica,</p>
+<p>OneOncology's network of 600+ oncologists across independent practices creates a data unification challenge that's core to your analytics mission. Bob Heyl will show how CareFirst approached the same problem &mdash; connecting siloed data before deploying AI agents.</p>
+<p>We have a webinar coming up on <strong>Thursday, March 26 at 12pm ET</strong> that connects directly to this:</p>
+<p><strong>CareFirst BlueCross BlueShield&rsquo;s Chief Technology &amp; Product Officer Bob Heyl</strong> is joining four Salesforce experts to walk through how payers are using Agentforce, MuleSoft, and Data 360 to harmonize data and scale AI without the complexity.</p>
+<p>The session covers:</p>
+<ul><li>How Data 360 + MuleSoft create unified context for AI agents</li><li>Agent Fabric &mdash; governed agent-to-agent communication across systems</li><li>Moving past &ldquo;agent sprawl&rdquo; to a scalable strategy that delivers today</li></ul>
+<p><a href="https://sfdc.co/brdokz" style="color:#0176d3;font-weight:bold">Register Now</a></p>
+<p style="margin-top:16px">Happy to chat after if any of it resonates with what OneOncology is working through.</p>
+<p>Best,<br>Jane Pollock<br>Integration &amp; API Enablement<br>MuleSoft, A Salesforce Company<br>M: (470) 471-8908</p></div>
+</div></div>
+
+<!-- 14. Premier Healthcare Solutions -->
+<div class="hook-card">
+<div class="hook-card-head"><h3>14. Premier Healthcare Solutions</h3><span class="hook-badge">premier-hc</span></div>
+<div class="hook-card-body">
+<div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Hook</div>
+<div class="hook-text">Premier's CRM program spans a massive provider network with complex data flows between members, suppliers, and health systems. Bob Heyl's session on scaling AI agents across a payer enterprise shows how the integration layer becomes the foundation for everything else.</div>
+<div class="hook-contacts">Sends to: <span>Mahesh &mdash; mahesh_patel@premierinc.com</span><span>Jas &mdash; jas_sangha@premierinc.com</span></div>
+<span class="hook-toggle" onclick="var el=this.nextElementSibling;el.style.display=el.style.display==='block'?'none':'block';this.textContent=el.style.display==='block'?'Hide email':'Preview email'">Preview email</span>
+<div class="hook-email-preview"><p>Hi Mahesh,</p>
+<p>Premier's CRM program spans a massive provider network with complex data flows between members, suppliers, and health systems. Bob Heyl's session on scaling AI agents across a payer enterprise shows how the integration layer becomes the foundation for everything else.</p>
+<p>We have a webinar coming up on <strong>Thursday, March 26 at 12pm ET</strong> that connects directly to this:</p>
+<p><strong>CareFirst BlueCross BlueShield&rsquo;s Chief Technology &amp; Product Officer Bob Heyl</strong> is joining four Salesforce experts to walk through how payers are using Agentforce, MuleSoft, and Data 360 to harmonize data and scale AI without the complexity.</p>
+<p>The session covers:</p>
+<ul><li>How Data 360 + MuleSoft create unified context for AI agents</li><li>Agent Fabric &mdash; governed agent-to-agent communication across systems</li><li>Moving past &ldquo;agent sprawl&rdquo; to a scalable strategy that delivers today</li></ul>
+<p><a href="https://sfdc.co/brdokz" style="color:#0176d3;font-weight:bold">Register Now</a></p>
+<p style="margin-top:16px">Happy to chat after if any of it resonates with what Premier Healthcare Solutions is working through.</p>
+<p>Best,<br>Jane Pollock<br>Integration &amp; API Enablement<br>MuleSoft, A Salesforce Company<br>M: (470) 471-8908</p></div>
+</div></div>
+
+<!-- 15. Children's Minnesota -->
+<div class="hook-card">
+<div class="hook-card-head"><h3>15. Children's Minnesota</h3><span class="hook-badge">childrens-mn</span></div>
+<div class="hook-card-body">
+<div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Hook</div>
+<div class="hook-text">Children's Minnesota is scaling outreach and professional relations through Salesforce &mdash; Bob Heyl's session shows the next step: how a large health enterprise connected that CRM data to clinical and operational systems to power AI agents.</div>
+<div class="hook-contacts">Sends to: <span>Lorelei &mdash; lorelei.noire@childrensmn.org</span><span>Angela &mdash; angela.stoltz@childrensmn.org</span></div>
+<span class="hook-toggle" onclick="var el=this.nextElementSibling;el.style.display=el.style.display==='block'?'none':'block';this.textContent=el.style.display==='block'?'Hide email':'Preview email'">Preview email</span>
+<div class="hook-email-preview"><p>Hi Lorelei,</p>
+<p>Children's Minnesota is scaling outreach and professional relations through Salesforce &mdash; Bob Heyl's session shows the next step: how a large health enterprise connected that CRM data to clinical and operational systems to power AI agents.</p>
+<p>We have a webinar coming up on <strong>Thursday, March 26 at 12pm ET</strong> that connects directly to this:</p>
+<p><strong>CareFirst BlueCross BlueShield&rsquo;s Chief Technology &amp; Product Officer Bob Heyl</strong> is joining four Salesforce experts to walk through how payers are using Agentforce, MuleSoft, and Data 360 to harmonize data and scale AI without the complexity.</p>
+<p>The session covers:</p>
+<ul><li>How Data 360 + MuleSoft create unified context for AI agents</li><li>Agent Fabric &mdash; governed agent-to-agent communication across systems</li><li>Moving past &ldquo;agent sprawl&rdquo; to a scalable strategy that delivers today</li></ul>
+<p><a href="https://sfdc.co/brdokz" style="color:#0176d3;font-weight:bold">Register Now</a></p>
+<p style="margin-top:16px">Happy to chat after if any of it resonates with what Children's Minnesota is working through.</p>
+<p>Best,<br>Jane Pollock<br>Integration &amp; API Enablement<br>MuleSoft, A Salesforce Company<br>M: (470) 471-8908</p></div>
+</div></div>
+
+<p style="text-align:center;color:var(--text-dim);font-size:.75rem;margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border)">Campaign: payer-webinar-2026-03-26 &middot; 15 accounts &middot; 31 contacts &middot; Built for AE use only &middot; Do not forward to prospects</p>
+
+</div><!-- /tab-hooks -->
+
 </div><!-- /container -->
 
 <script>
+function switchTab(tab){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
 function toggleCard(header){
   header.closest('.email-card').classList.toggle('open');
 }
